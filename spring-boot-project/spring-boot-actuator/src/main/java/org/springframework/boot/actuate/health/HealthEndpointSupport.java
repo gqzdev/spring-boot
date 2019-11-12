@@ -34,6 +34,8 @@ import org.springframework.util.Assert;
  */
 abstract class HealthEndpointSupport<C, T> {
 
+	static final Health DEFAULT_HEALTH = Health.up().build();
+
 	private final ContributorRegistry<C> registry;
 
 	private final HealthEndpointGroups groups;
@@ -80,7 +82,7 @@ abstract class HealthEndpointSupport<C, T> {
 		Object contributor = getContributor(path, pathOffset);
 		T health = getContribution(apiVersion, group, contributor, showComponents, showDetails,
 				isSystemHealth ? this.groups.getNames() : null);
-		return (health != null) ? new HealthResult<T>(health, group) : null;
+		return (health != null) ? new HealthResult<>(health, group) : null;
 	}
 
 	@SuppressWarnings("unchecked")
